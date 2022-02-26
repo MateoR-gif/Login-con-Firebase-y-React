@@ -1,7 +1,7 @@
-//* CONTEXTO PARA CONCEDER ACCESO LUEGO DEL LOGIN *//
+//* CONTEXTO PARA CONCEDER ACCESO LUEGO DEL LOGIN o REGISTER *//
 
-import { createContext, useContext } from "react";
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createContext, useContext, useEffect, useState } from "react";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from "../firebase/firebase-config";
 
 export const authContext = createContext()
@@ -13,10 +13,33 @@ export const useAuth = () => {
 }
 
 export function AuthProvider({ children }) {
+
+    //* INICIALIZA EL ESTADO DEL USUARIO COMO NULL *//
+    const [user, setUser] = useState(null);
+
+    //* FUNCIÓN PARA ESPERAR LA CARGA DEL NUEVO CONTEXTO *//
+    const [loading, setLoading] = useState(true);
+
     //* ENVÍA DATOS A FIREBASE *//
-    const signup = (email, password) => createUserWithEmailAndPassword(auth, email, password);
+    const signup = (email, password) => {
+        createUserWithEmailAndPassword(auth, email, password);
+    }
+
+    const login = async (email, password) => {
+        const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+    }
+
+    const logout = () => signOut(auth);
+
+    //* VERIFICA EL ACTUAL ESTADO DEL USUARIO *//
+    useEffect(() => {
+        onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser);
+            setLoading(false);
+        })
+    }, [])
 
     return (
-        <authContext.Provider value={{ signup }}>{children}</authContext.Provider>
+        <authContext.Provider value={{ signup, login, logout, loading, user }}>{children}</authContext.Provider> //* RETORNA LOS VALORES PARA EL CONTEXTO ACTUAL DE LA AUTENTICACIÓN *//
     );
 }

@@ -26,14 +26,15 @@ export function Register() {
 
     const handleSubmit = async e =>{
         e.preventDefault() //* PREVENIR EL REFRESCO DE LA PÁGINA *//
+        setError('')
         if (user.password != user.repassword){
             setError("Las contraseñas no coinciden")
         } else{
             try {
                 await signup(user.email, user.password) 
-                navigate("/"); //* SI NO HUBO ERROR EN EL REGISTRO, NAVEGAS AL HOME *//
+                navigate("/login"); //* SI NO HUBO ERROR EN EL REGISTRO, NAVEGAS AL LOGIN *//
             } catch (error) {
-                console.log(error.code);
+                //* TRADUCCIÓN DE ERRORES *//
                 switch (error.code){
                     case "auth/internal-error":
                         setError("No ha digitado los campos correctamente.");
