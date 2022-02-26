@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
+import { Alert } from "./Alert";
 
 export function Login() {
 
@@ -10,7 +11,7 @@ export function Login() {
         password: "",
     });
 
-    const { login } = useAuth(); //* LLAMA LA FUNCIÓN LOGIN *//
+    const { login, loginWithGoogle } = useAuth(); //* LLAMA LA FUNCIÓN LOGIN *//
     const navigate = useNavigate(); //* LLAMA LA FUNCIÓN QUE PERMITE NAVEGAR ENTRE PÁGINAS *//
     const [error, setError] = useState(); //* GUARDA MENSAJES DE ERROR *//
 
@@ -29,7 +30,6 @@ export function Login() {
             await login(user.email, user.password) 
             navigate("/"); //* SI NO HUBO ERROR EN EL LOGIN, NAVEGAS AL HOME *//
         } catch (error) {
-            console.log(error.code)
             //* TRADUCCIÓN DE ERRORES *//
             switch (error.code){
                 case "auth/internal-error":
@@ -47,14 +47,26 @@ export function Login() {
             }
         }       
     }
+
+    const handleGoogleSignIn = async() => {
+        setError('')
+        try {
+            await loginWithGoogle()
+            navigate("/") 
+        } catch (error) {
+            setError('Hubo un error con el login de google, inténtelo más tarde.')   
+        }
+    }
+
     return (
         <div>
-            {error && <p>{error}</p>}
+            {error && <Alert message = {error} />}
             <form onSubmit={handleSubmit}>
                 <input type="email" name="email" placeholder="Email" onChange={handleChange}></input>
                 <input type="password" name="password" placeholder="Password" onChange={handleChange}></input>
-                <button type="submit" name="login">Login</button>
+                <button type="submit" name="login">Login</button> 
             </form>
+            <button onClick={handleGoogleSignIn}>Google Login</button>
         </div>
     )
 }

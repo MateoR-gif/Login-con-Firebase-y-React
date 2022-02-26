@@ -1,7 +1,7 @@
 //* CONTEXTO PARA CONCEDER ACCESO LUEGO DEL LOGIN o REGISTER *//
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from "../firebase/firebase-config";
 
 export const authContext = createContext()
@@ -21,8 +21,8 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     //* ENVÍA DATOS A FIREBASE *//
-    const signup = (email, password) => {
-        createUserWithEmailAndPassword(auth, email, password);
+    const signup = async (email, password) => {
+        const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
     }
 
     const login = async (email, password) => {
@@ -30,6 +30,12 @@ export function AuthProvider({ children }) {
     }
 
     const logout = () => signOut(auth);
+
+    //* LOGIN CON GOOGLE *//
+    const loginWithGoogle = () => {
+        const googleProvider = new GoogleAuthProvider();
+        return signInWithPopup(auth, googleProvider)
+    }
 
     //* VERIFICA EL ACTUAL ESTADO DEL USUARIO *//
     useEffect(() => {
@@ -40,6 +46,6 @@ export function AuthProvider({ children }) {
     }, [])
 
     return (
-        <authContext.Provider value={{ signup, login, logout, loading, user }}>{children}</authContext.Provider> //* RETORNA LOS VALORES PARA EL CONTEXTO ACTUAL DE LA AUTENTICACIÓN *//
+        <authContext.Provider value={{ signup, login, logout, loginWithGoogle, loading, user }}>{children}</authContext.Provider> //* RETORNA LOS VALORES PARA EL CONTEXTO ACTUAL DE LA AUTENTICACIÓN *//
     );
 }

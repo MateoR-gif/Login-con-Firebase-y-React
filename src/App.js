@@ -9,10 +9,11 @@ import { AuthProvider } from "./context/authContext"; //*FUNCIÓN PARA LA AUTENT
 export default function App() {
   return (
     //* (AuthProvider provee la autenticación para el acceso a las rutas (Routes)) *//
+    //* (ProtectedRoute protege la ruta en caso de que no se encuentre logeado un usuario) *//
     <AuthProvider>
       <Routes>
         <Route path="/" element={
-          <ProtectedRoute>
+          <ProtectedRoute> 
             <Home />
           </ProtectedRoute>
         }></Route>
