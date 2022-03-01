@@ -6,6 +6,7 @@ import { ProtectedRoute, ProtectedRoute2 } from "./components/ProtectedRoute";
 import { Register } from "./components/Register";
 import { AuthProvider } from "./context/authContext"; //*FUNCIÓN PARA LA AUTENTICACIÓN DEL USUARIO *//
 
+
 export default function App() {
   return (
     //* (AuthProvider provee la autenticación para el acceso a las rutas (Routes)) *//
@@ -15,7 +16,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={
           <ProtectedRoute> 
-            <Home />
+              <Home />
           </ProtectedRoute>
         }></Route>
         <Route path="/login" element={<Login />}></Route>

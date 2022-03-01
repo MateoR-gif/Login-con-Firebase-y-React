@@ -59,7 +59,7 @@ export function Register() {
             <div className="text-center">
                 {error && <Alert message = {error} />}
                 <form onSubmit={handleSubmit} className="bg-primary2 px-8 pt-3 
-                pb-8 mb-2">
+                pb-8 mb-0">
                     <div>
                         <img src="../logoCrapp.png" alt="Logo Crapp"
                             className="mx-auto p-9 mb-8"></img>
@@ -87,8 +87,12 @@ export function Register() {
                     bg-primary hover:bg-white rounded hover:text-black">Register</button>
 
                 </form>
-                <div>
-                    <p className="separated">Already have an Account?<Link to="/login">LogIn</Link></p>
+                <div className="flex m-0 p-0">
+                    <p className="p-3">Already have an Account?</p>
+                    <button className="w-2/5 ml-10 text-center 
+                        bg-gray-300 text-primary hover:bg-primary2 
+                        hover:text-white my-2 p-3"><Link to=
+                        "/login">LogIn</Link></button>
                 </div>
             </div>
             
