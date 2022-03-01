@@ -2,6 +2,7 @@
 
 import { useAuth } from "../context/authContext"
 import { useState } from "react";
+import { Alert } from "./Alert";
 
 export function Home() {
 
@@ -25,7 +26,7 @@ export function Home() {
     if (loading) return <h1>Cargando...</h1>
 
     return <div>
-
+        {error && <Alert message = {error} />}
         <h1>Welcome, {user.displayName || user.email}</h1>
         <button onClick={handleLogout} name="logout">Logout</button>
 

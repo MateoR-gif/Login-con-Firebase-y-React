@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "../context/authContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Alert } from "./Alert";
 
 export function Register() {
@@ -55,14 +55,43 @@ export function Register() {
     }
 
     return (
-        <div>
-            {error && <Alert message = {error} />}
-            <form onSubmit={handleSubmit}>
-                <input type="email" name="email" placeholder="Email" onChange={handleChange}></input>
-                <input type="password" name="password" placeholder="Password" onChange={handleChange}></input>
-                <input type="password" name="repassword" placeholder="Repeat Password" onChange={handleChange}></input>
-                <button type="submit" name="register">Register</button>
-            </form>
+        <div className="w-full max-w-xs m-auto">
+            <div className="text-center">
+                {error && <Alert message = {error} />}
+                <form onSubmit={handleSubmit} className="bg-primary2 px-8 pt-3 
+                pb-8 mb-2">
+                    <div>
+                        <img src="../logoCrapp.png" alt="Logo Crapp"
+                            className="mx-auto p-9 mb-8"></img>
+                    </div>
+                    <div className="mb-10">
+                        <input type="email" name="email"
+                            placeholder="Email" onChange={handleChange}
+                            className="appearance-none bg-transparent text-left
+                                            focus:outline-none leading-tight text-white placeholder-white
+                                            border border-primary2 border-b-black w-9/12 pb-1" ></input>
+                    </div>
+                    <div className="mb-10">
+                        <input type="password" name="password" placeholder="Password"
+                            onChange={handleChange} className="appearance-none bg-transparent text-left  
+                                            focus:outline-none leading-tight text-white placeholder-white
+                                            border border-primary2 border-b-black w-9/12 pb-1"></input>
+                    </div>
+                    <div className="mb-10">
+                        <input type="password" name="repassword" placeholder="Repeat Password"
+                            onChange={handleChange} className="appearance-none bg-transparent text-left 
+                                            focus:outline-none leading-tight text-white placeholder-white
+                                            border border-primary2 border-b-black w-9/12 pb-1"></input>
+                    </div>
+                    <button type="submit" name="register" className="text-white p-4 px-10 
+                    bg-primary hover:bg-white rounded hover:text-black">Register</button>
+
+                </form>
+                <div>
+                    <p className="separated">Already have an Account?<Link to="/login">LogIn</Link></p>
+                </div>
+            </div>
+            
         </div>
     )
 }

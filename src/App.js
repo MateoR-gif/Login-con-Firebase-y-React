@@ -1,8 +1,8 @@
 import React from "react";
-import { Routes, Rout, Route } from "react-router-dom"; //*FUNCIONES PARA EL MANEJO DE LAS RUTAS DE LA WEB*//
+import { Routes, Route } from "react-router-dom"; //*FUNCIONES PARA EL MANEJO DE LAS RUTAS DE LA WEB*//
 import { Home } from './components/Home'
 import { Login } from "./components/Login";
-import { ProtectedRoute } from "./components/ProtectedRoute";
+import { ProtectedRoute, ProtectedRoute2 } from "./components/ProtectedRoute";
 import { Register } from "./components/Register";
 import { AuthProvider } from "./context/authContext"; //*FUNCIÓN PARA LA AUTENTICACIÓN DEL USUARIO *//
 
@@ -10,7 +10,8 @@ export default function App() {
   return (
     //* (AuthProvider provee la autenticación para el acceso a las rutas (Routes)) *//
     //* (ProtectedRoute protege la ruta en caso de que no se encuentre logeado un usuario) *//
-    <AuthProvider>
+    <div className="bg-background h-screen flex">
+      <AuthProvider>
       <Routes>
         <Route path="/" element={
           <ProtectedRoute> 
@@ -21,5 +22,6 @@ export default function App() {
         <Route path="/register" element={<Register />} />
       </Routes>
     </AuthProvider>
+    </div>
   )
 }
