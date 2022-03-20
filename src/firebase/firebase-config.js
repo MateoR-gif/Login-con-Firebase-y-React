@@ -1,7 +1,7 @@
 // IMPORT DE FUNCIONES DEL SDK
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore"; // FUNCION FIRESTORE
+import { getFirestore, collection, getDocs } from "firebase/firestore"; // FUNCION FIRESTORE
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -19,6 +19,12 @@ const firebaseConfig = {
 // INICIALIZACIÓN FIREBASE
 const app = initializeApp(firebaseConfig);
 // INICIALIZACIÓN FIRESTORE
-export const db = getFirestore(app);
+export const firestore = getFirestore(app);
+// INICIALIZACIÓN REFERENCIA FIRESTORE
+export const colRef = collection(firestore, 'users')
 // INICIALIZACIÓN AUTH
 export const auth = getAuth(app);
+
+getDocs(colRef).then((snapshot) => {
+  console.log(snapshot.docs)
+})

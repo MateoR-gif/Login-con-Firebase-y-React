@@ -2,7 +2,8 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from "../firebase/firebase-config";
+import { auth, firestore, colRef } from "../firebase/firebase-config";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 export const authContext = createContext()
 
@@ -12,19 +13,28 @@ export const useAuth = () => {
     return context;
 }
 
+
 export function AuthProvider({ children }) {
 
     //* INICIALIZA EL ESTADO DEL USUARIO COMO NULL *//
     const [user, setUser] = useState(null);
 
     //* FUNCIÓN PARA ESPERAR LA CARGA DEL NUEVO CONTEXTO *//
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     //* ENVÍA DATOS A FIREBASE *//
     const signup = async (email, password) => {
-        const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredentials = await createUserWithEmailAndPassword(
+            auth, 
+            email, 
+            password).then((userFirebase) => {
+                return userFirebase;
+            });
+        const docuRef = doc(firestore, `users/${userCredentials.user.uid}`);
+        setDoc(docuRef, {rol: "user", email: email})
+            
     }
-
+    
     const login = async (email, password) => {
         const userCredentials = await signInWithEmailAndPassword(auth, email, password);
     }
@@ -44,7 +54,7 @@ export function AuthProvider({ children }) {
             setLoading(false);
         })
     }, [])
-
+    
     return (
         <authContext.Provider value={{ signup, login, logout, loginWithGoogle, loading, user }}>{children}</authContext.Provider> //* RETORNA LOS VALORES PARA EL CONTEXTO ACTUAL DE LA AUTENTICACIÓN *//
     );
