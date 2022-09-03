@@ -4,6 +4,7 @@ import { useAuth } from "../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "./Alert";
 
+
 export function Login() {
 
     const [user, setUser] = useState({
@@ -31,6 +32,7 @@ export function Login() {
             navigate("/"); //* SI NO HUBO ERROR EN EL LOGIN, NAVEGAS AL HOME *//
         } catch (error) {
             //* TRADUCCIÓN DE ERRORES *//
+            // eslint-disable-next-line default-case
             switch (error.code) {
                 case "auth/internal-error":
                     setError("No ha digitado los campos correctamente.");
@@ -81,7 +83,7 @@ export function Login() {
                 <div>
                     <div>
                         <button onClick={handleGoogleSignIn}>Google Login</button>
-                        <button><Link to="/register">Register</Link></button>
+                        <Link to="/register">Register</Link>
                     </div>
                 </div>
             </div>

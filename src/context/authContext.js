@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
         setDoc(docuRef, {rol: "user", email: email})
     }
     const login = async (email, password) => {
-        const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+        await signInWithEmailAndPassword(auth, email, password);
     }
 
     const logout = () => signOut(auth);

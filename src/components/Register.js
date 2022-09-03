@@ -97,7 +97,7 @@ export function Register() {
                 </form>
                 <div>
                     <p>Already have an Account?</p>
-                    <button><Link to="/login">LogIn</Link></button>
+                    <Link to="/login">LogIn</Link>
                 </div>
         </div>
     )
