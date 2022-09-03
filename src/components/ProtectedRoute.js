@@ -11,6 +11,6 @@ export function ProtectedRoute({children}) {
     //* SI EL OBJETO USER NO EXISTE, ENVIAR AL USUARIO AL LOGIN *// 
     if (!user) return <Navigate to='/login' />
 
-    //* SI EXISTE, MOSTRAR LA PÁGINA DE INICIO *//    
+    //* SI EXISTE, MOSTRAR LA PÁGINA DE INICIO *//
     return <>{children}</>
 }

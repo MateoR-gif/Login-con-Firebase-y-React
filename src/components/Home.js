@@ -24,14 +24,11 @@ export function Home() {
     //* SI LOS DATOS DEL AUTH NO SE HAN ACTUALIZADO, SE PINTA UN "CARGANDO" *//
     if (loading) return <h1>Cargando...</h1>
 
-    return <div className="w-full max-w-xs m-auto">
-        <div className="bg-white rounded shadow-md
-            px-8 pt-6 pb-8 mb-4">
+    return <div>
+        <div>
             {error && <Alert message={error} />}
-            <h1 className="">Welcome, {user.displayName || user.email}</h1>
-            <button className="w-2/5 ml-10 text-center 
-            bg-gray-300 text-primary hover:bg-primary2 
-            hover:text-white my-2 p-3 rounded"onClick={handleLogout} name="logout">Logout</button>
+            <h1>Welcome, {user.displayName || user.email}</h1>
+            <button onClick={handleLogout} name="logout">Logout</button>
         </div>
     </div>
 }
